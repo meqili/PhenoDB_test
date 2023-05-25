@@ -588,6 +588,8 @@ class VariantFilter(object):
 def maf_format(m):
     if m == ".":
         return 0.0
+    elif m == "-":
+        return 0.0
     elif len(m) == 0:
         return 0.0
     elif m == "\t":
@@ -621,7 +623,7 @@ class VariantFields(object):
         self.chromosome = chromosome
         self.start_position = start_position
         # self.end_position = end_position
-        self.end_position = start_position + length(ref_allele) - 1
+        # self.end_position = start_position + length(ref_allele) - 1
         self.ref_allele = ref_allele
         self.alt_allele = alt_allele
         self.genotype = genotype
@@ -633,8 +635,8 @@ class VariantFields(object):
         return self.chromosome
     def get_start_position(self):
         return self.start_position
-    def get_end_position(self):
-        return self.end_position
+    # def get_end_position(self):
+    #     return self.end_position
     def get_ref_allele(self):
         return self.ref_allele
     def get_alt_allele(self):
@@ -889,9 +891,10 @@ class Analyzer(object):
         try:
             chromosome = var.split("\t")[self.variant_fields.get_chromosome()]
             start = var.split("\t")[self.variant_fields.get_start_position()]
-            end = var.split("\t")[self.variant_fields.get_end_position()]
+            # end = var.split("\t")[self.variant_fields.get_end_position()]
             ref = var.split("\t")[self.variant_fields.get_ref_allele()]
             alt = var.split("\t")[self.variant_fields.get_alt_allele()]
+            end = int(start) + len(ref) - 1
             chr_num = chromosome
             if chromosome.capitalize().startswith("CHR"):
                 chr_num = chromosome.capitalize().replace("CHR", "")
