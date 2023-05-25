@@ -616,7 +616,7 @@ def filter_variants_without_log(sample_variants, columns):
 class VariantFields(object):
     # def __init__(self, chromosome, start_position, end_position, ref_allele, alt_allele, genotype,
     #              gene_location, gene_name, exon_func, cols_maf):
-    def __init__(self, chromosome, start_position, end_position, ref_allele, alt_allele, genotype,
+    def __init__(self, chromosome, start_position, ref_allele, alt_allele, genotype,
                  gene_location, gene_name, cols_maf):
         self.chromosome = chromosome
         self.start_position = start_position
@@ -689,6 +689,7 @@ class VariantFields(object):
 #     return VariantFields(chromosome, start_position, end_position, ref_allele, alt_allele, genotype,
 #                    gene_location, gene_name, exon_func, cols_maf)
 def parse_variant_header(header):
+    header = header.replace("\n", "")
     fields = header.split("\t")
     n = 0
     cols_maf = []
@@ -704,7 +705,7 @@ def parse_variant_header(header):
             ref_allele = n
         elif field == "ALT":
             alt_allele = n
-        elif field.endswith("_AdjustedGenotype\n"):
+        elif field.endswith("_AdjustedGenotype"):
             genotype = n
         # elif field == "RefgeneGeneLocation":
         elif field == "CSQ_Consequence":
